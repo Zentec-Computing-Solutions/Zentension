@@ -5,7 +5,7 @@ button.style.backgroundColor = "#007a43";
 
 button.onclick = () => {
     const scriptElement = document.createElement("script");
-    scriptElement.src = chrome.runtime.getURL("page_script.js");
+    scriptElement.src = chrome.runtime.getURL("show_pdf.js");
     // Append to body, execute, and then remove
     document.body.appendChild(scriptElement);
     scriptElement.onload = () => {

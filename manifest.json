@@ -10,7 +10,7 @@
     "content_scripts": [
         {
             "matches": ["https://zentec.repairshopr.com/tickets/*"],
-            "js": ["content.js"]
+            "js": ["print_label.js"]
         },
         {
             "matches": ["https://zentec.repairshopr.com/registers/*/close"],
@@ -19,7 +19,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["page_script.js"],
+            "resources": ["show_pdf.js"],
             "matches": ["https://zentec.repairshopr.com/*"]
         }
     ]
