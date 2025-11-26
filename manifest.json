@@ -9,8 +9,11 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://zentec.repairshopr.com/tickets/*"],
-            "js": ["print_label.js"]
+            "matches": [
+                "https://zentec.repairshopr.com/tickets/*",
+                "https://zentec.repairshopr.com/customers/*"
+            ],
+            "js": ["copy_buttons.js", "print_label_button.js", "bootstrap.js"]
         },
         {
             "matches": ["https://zentec.repairshopr.com/registers/*/close"],
