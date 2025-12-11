@@ -4,8 +4,8 @@
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-        "default_popup": "hello.html",
-        "default_icon": "logo.png"
+        "default_popup": "popup.html",
+        "default_icon": "assets/logo.png"
     },
     "content_scripts": [
         {
@@ -13,17 +13,28 @@
                 "https://zentec.repairshopr.com/tickets/*",
                 "https://zentec.repairshopr.com/customers/*"
             ],
-            "js": ["copy_buttons.js", "print_label_button.js", "bootstrap.js"]
+            "js": [
+                "scripts/copy_buttons.js",
+                "scripts/print_label_button.js",
+                "vendor/bootstrap.js"
+            ]
         },
         {
-            "matches": ["https://zentec.repairshopr.com/registers/*/close"],
-            "js": ["close_register_script.js"]
+            "matches": [
+                "https://zentec.repairshopr.com/registers/*/close",
+                "https://zentec.repairshopr.com/registers/*/open"
+            ],
+            "js": ["scripts/close_register_script.js"]
         }
     ],
     "web_accessible_resources": [
         {
-            "resources": ["show_pdf.js"],
+            "resources": ["scripts/show_pdf.js"],
             "matches": ["https://zentec.repairshopr.com/*"]
+        },
+        {
+            "resources": ["scripts/price_calculator.js"],
+            "matches": ["<all_urls>"]
         }
     ]
 }
