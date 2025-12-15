@@ -10,9 +10,12 @@ function runCalculation() {
     if (!gstSwitch.checked) {
         const gstInclusiveValue = value * 1.15;
         gstInclusiveInput.value = gstInclusiveValue.toFixed(2);
+        const price = calculatePrice(gstInclusiveValue);
+        document.getElementById("calculatedPrice").value = price;
+    } else {
+        const price = calculatePrice(value);
+        document.getElementById("calculatedPrice").value = price;
     }
-    const price = calculatePrice(value);
-    document.getElementById("calculatedPrice").value = price;
 }
 
 calculateBtn.addEventListener("click", runCalculation);
