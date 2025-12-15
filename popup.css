@@ -15,9 +15,23 @@ mdui-text-field {
     height: 52px;
 }
 
+mdui-switch {
+    margin-top: 10px;
+}
+
+p {
+    font-size: 16px;
+    margin: 20px;
+    margin-bottom: 0px;
+}
+
 .inputs {
     display: flex;
     justify-content: flex-start;
+}
+
+#desc {
+    margin-bottom: 10px;
 }
 
 #calculateBtn {

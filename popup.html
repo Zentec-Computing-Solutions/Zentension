@@ -6,7 +6,7 @@
     </head>
     <body>
         <h1>Zenstension</h1>
-        <p>
+        <p id="desc">
             An extension for RepairShopr that adds lots of shortcuts and
             features.
         </p>
@@ -27,6 +27,11 @@
             </mdui-button-icon>
         </div>
 
+        <div class="inputs">
+            <p>Input includes GST</p>
+            <mdui-switch id="gstSwitch" checked></mdui-switch>
+        </div>
+
         <mdui-text-field
             readonly
             label="Calculated Price"
@@ -34,10 +39,34 @@
             id="calculatedPrice"
             variant="outlined"
         >
-            <mdui-button-icon id="copyBtn" variant="filled" slot="end-icon">
+            <mdui-button-icon
+                id="outputCopyBtn"
+                variant="filled"
+                slot="end-icon"
+            >
                 <img src="assets/icons/copy.svg" alt="copy" />
             </mdui-button-icon>
         </mdui-text-field>
+
+        <mdui-text-field
+            readonly
+            label="GST Inclusive Input"
+            value=""
+            variant="outlined"
+            id="gstInclusiveInput"
+            disabled
+        >
+            <mdui-button-icon
+                id="gstInclusiveCopyBtn"
+                variant="filled"
+                slot="end-icon"
+                disabled
+            >
+                <img
+                    src="assets/icons/copy.svg"
+                    alt="copy"
+                /> </mdui-button-icon
+        ></mdui-text-field>
 
         <script src="scripts/price_calculator.js"></script>
         <script src="scripts/popup.js"></script>
