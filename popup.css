@@ -1,0 +1,28 @@
+@font-face {
+    font-family: GoogleSans;
+    src: url(assets/GoogleSansFlex.ttf);
+}
+
+body {
+    width: 300px;
+    font-family: GoogleSans;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+mdui-text-field {
+    margin-top: 10px;
+    height: 52px;
+}
+
+.inputs {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#calculateBtn {
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 52px;
+    width: 52px;
+}

@@ -12,7 +12,7 @@ function initPrintLabel() {
 
     button.onclick = () => {
         const scriptElement = document.createElement("script");
-        scriptElement.src = chrome.runtime.getURL("show_pdf.js");
+        scriptElement.src = chrome.runtime.getURL("scripts/show_pdf.js");
         document.body.appendChild(scriptElement);
         scriptElement.onload = () => document.body.removeChild(scriptElement);
         return false;

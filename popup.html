@@ -1,18 +1,44 @@
-<html>
+<html class="mdui-theme-dark">
+    <head>
+        <link rel="stylesheet" href="popup.css" />
+        <link rel="stylesheet" href="mdui/mdui.css" />
+        <script src="mdui/mdui.global.js"></script>
+    </head>
     <body>
         <h1>Zenstension</h1>
         <p>
             An extension for RepairShopr that adds lots of shortcuts and
             features.
         </p>
-
+        <mdui-divider></mdui-divider>
         <h3>Calculate a price</h3>
-        <input type="text" id="priceInput" placeholder="Enter a value" />
-        <button id="calculateBtn">Calculate</button>
 
-        <p>Calculated Price: <span id="calculatedPrice">0</span></p>
+        <div class="inputs">
+            <mdui-text-field
+                type="number"
+                id="priceInput"
+                placeholder="Enter a value"
+                autofocus
+            ></mdui-text-field>
 
-        <script src="price_calculator.js"></script>
-        <script src="popup.js"></script>
+            <mdui-button-icon id="calculateBtn" variant="filled">
+                <img src="assets/icons/send.svg" alt="send" />
+            </mdui-button-icon>
+        </div>
+
+        <mdui-text-field
+            readonly
+            label="Calculated Price"
+            value=""
+            id="calculatedPrice"
+            variant="outlined"
+        >
+            <mdui-button-icon id="copyBtn" variant="filled" slot="end-icon">
+                <img src="assets/icons/copy.svg" alt="copy" />
+            </mdui-button-icon>
+        </mdui-text-field>
+
+        <script src="scripts/price_calculator.js"></script>
+        <script src="scripts/popup.js"></script>
     </body>
 </html>

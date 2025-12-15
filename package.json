@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "chrome-types": "^0.1.352"
+    "chrome-types": "^0.1.352",
+    "mdui": "^2.1.4"
   }
 }

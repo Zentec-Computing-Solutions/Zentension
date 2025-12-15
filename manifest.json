@@ -1,7 +1,7 @@
 {
     "name": "Zenstension",
-    "description": "An extension for RepairShopr that adds lots of shortcuts and features.",
-    "version": "1.0",
+    "description": "An extension for RepairShopr that adds lots of shortcuts and features for the Zentec team.",
+    "version": "0.1.1",
     "manifest_version": 3,
     "action": {
         "default_popup": "popup.html",

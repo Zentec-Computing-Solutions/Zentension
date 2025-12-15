@@ -1,16 +1,22 @@
 const input = document.getElementById("priceInput");
-const btn = document.getElementById("calculateBtn");
+const calculateBtn = document.getElementById("calculateBtn");
+const copyBtn = document.getElementById("copyBtn");
 
 function runCalculation() {
     const value = input.value;
     const price = calculatePrice(value);
-    document.getElementById("calculatedPrice").textContent = price;
+    document.getElementById("calculatedPrice").value = price;
 }
 
-btn.addEventListener("click", runCalculation);
+calculateBtn.addEventListener("click", runCalculation);
 
 input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         runCalculation();
     }
+});
+
+copyBtn.addEventListener("click", () => {
+    let price = document.getElementById("calculatedPrice").value;
+    navigator.clipboard.writeText(price);
 });
