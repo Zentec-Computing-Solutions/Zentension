@@ -7,8 +7,7 @@ function initPrintLabel() {
     const button = document.createElement("button");
     button.id = "print-label-button";
     button.textContent = "Print Label";
-    button.classList.add("btn", "btn-default", "btn-sm");
-    button.style.backgroundColor = "#007a43";
+    button.classList.add("btn", "btn-teal", "btn-sm");
 
     button.onclick = () => {
         const scriptElement = document.createElement("script");
