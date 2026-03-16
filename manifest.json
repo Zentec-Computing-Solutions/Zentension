@@ -36,5 +36,6 @@
             "resources": ["scripts/price_calculator.js"],
             "matches": ["<all_urls>"]
         }
-    ]
+    ],
+    "permissions": ["clipboardWrite"]
 }
