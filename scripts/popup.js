@@ -4,6 +4,28 @@ const outputCopyBtn = document.getElementById("outputCopyBtn");
 const gstInclusiveCopyBtn = document.getElementById("gstInclusiveCopyBtn");
 const gstSwitch = document.getElementById("gstSwitch");
 const gstInclusiveInput = document.getElementById("gstInclusiveInput");
+const GST_SWITCH_STORAGE_KEY = "zenstension.gstIncluded";
+
+function updateGstDependentUI() {
+    const includesGst = gstSwitch.checked;
+
+    // Only enable this field/copy button when the input excludes GST.
+    gstInclusiveInput.disabled = includesGst;
+    gstInclusiveCopyBtn.disabled = includesGst;
+}
+
+function restoreGstSwitchState() {
+    const savedValue = localStorage.getItem(GST_SWITCH_STORAGE_KEY);
+    if (savedValue !== null) {
+        gstSwitch.checked = savedValue === "true";
+    }
+
+    updateGstDependentUI();
+}
+
+function persistGstSwitchState() {
+    localStorage.setItem(GST_SWITCH_STORAGE_KEY, String(gstSwitch.checked));
+}
 
 function runCalculation() {
     const value = input.value;
@@ -17,6 +39,8 @@ function runCalculation() {
         document.getElementById("calculatedPrice").value = price;
     }
 }
+
+restoreGstSwitchState();
 
 calculateBtn.addEventListener("click", runCalculation);
 
@@ -36,12 +60,7 @@ gstInclusiveCopyBtn.addEventListener("click", () => {
     navigator.clipboard.writeText(gstInclusivePrice);
 });
 
-gstSwitch.addEventListener("click", () => {
-    if (!gstSwitch.checked) {
-        gstInclusiveInput.disabled = true;
-        gstInclusiveCopyBtn.disabled = true;
-    } else {
-        gstInclusiveInput.disabled = false;
-        gstInclusiveCopyBtn.disabled = false;
-    }
+gstSwitch.addEventListener("change", () => {
+    persistGstSwitchState();
+    updateGstDependentUI();
 });
