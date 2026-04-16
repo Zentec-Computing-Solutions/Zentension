@@ -4,11 +4,11 @@ if (typeof $ !== "undefined" && typeof $.fn.modal !== "undefined") {
         populatePDF("label");
     } else {
         console.error(
-            "Zenstension Error: populatePDF function is not defined on the page."
+            "Zenstension Error: populatePDF function is not defined on the page.",
         );
     }
 } else {
     console.error(
-        "Zenstension Error: jQuery or Bootstrap modal is not available on the page."
+        "Zenstension Error: jQuery or Bootstrap modal is not available on the page.",
     );
 }

@@ -30,7 +30,7 @@ function fillRegisterCloseFields() {
             field.dispatchEvent(changeEvent);
         } else {
             console.warn(
-                `Zenstension: Field with ID '${id}' not found on register close page.`
+                `Zenstension: Field with ID '${id}' not found on register close page.`,
             );
         }
     }
@@ -57,7 +57,7 @@ if (!document.getElementById("fill-defaults-button")) {
     } else {
         // Fallback or warning if the form isn't found
         console.warn(
-            "Zenstension: Form with ID 'register-form' not found. Button will be prepended to the first form or body as a fallback."
+            "Zenstension: Form with ID 'register-form' not found. Button will be prepended to the first form or body as a fallback.",
         );
         // Fallback to prepending to the first form or body if the specific form isn't found
         const fallbackTarget = document.querySelector("form") || document.body;

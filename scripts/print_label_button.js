@@ -22,7 +22,7 @@ function initPrintLabel() {
         targetElement.prepend(button);
     } else {
         console.warn(
-            "Zenstension: Target element with class '.title-btns' not found on this ticket page. Button will not be added."
+            "Zenstension: Target element with class '.title-btns' not found on this ticket page. Button will not be added.",
         );
     }
 }

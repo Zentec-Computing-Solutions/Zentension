@@ -8,7 +8,7 @@ function addCopyButtons(headerKeywords = ["customer"]) {
         const clone = cell.cloneNode(true);
         clone
             .querySelectorAll(
-                ".zenstension-copy-btn, .zenstension-copy-feedback"
+                ".zenstension-copy-btn, .zenstension-copy-feedback",
             )
             .forEach((n) => n.remove());
         return clone.innerText.replace(/\s+/g, " ").trim();
@@ -108,7 +108,7 @@ function addCopyButtons(headerKeywords = ["customer"]) {
             } catch (err) {
                 console.warn(
                     "Zenstension: Failed to add copy button for row",
-                    err
+                    err,
                 );
             }
         });

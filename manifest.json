@@ -1,7 +1,7 @@
 {
     "name": "Zenstension",
     "description": "An extension for RepairShopr that adds lots of shortcuts and features for the Zentec team.",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "manifest_version": 3,
     "action": {
         "default_popup": "popup.html",
@@ -25,6 +25,10 @@
                 "https://zentec.repairshopr.com/registers/*/open"
             ],
             "js": ["scripts/close_register_script.js"]
+        },
+        {
+            "matches": ["https://zentec.repairshopr.com/payments/*"],
+            "js": ["scripts/payment_method_helper.js"]
         }
     ],
     "web_accessible_resources": [
