@@ -1,13 +1,15 @@
 function fillRegisterCloseFields() {
+    const registerMode = location.pathname.includes("/open") ? "open" : "close";
+    const fieldPrefix = `register_${registerMode}`;
     const fieldValues = {
-        register_close_ventis: "10",
-        register_close_chincos: "10",
-        register_close_dollars: "10",
-        register_close_two: "10",
-        register_close_five: "5",
-        register_close_ten: "4",
-        register_close_twenty: "4",
-        register_close_fifty: "2",
+        [`${fieldPrefix}_ventis`]: "10",
+        [`${fieldPrefix}_chincos`]: "10",
+        [`${fieldPrefix}_dollars`]: "10",
+        [`${fieldPrefix}_two`]: "10",
+        [`${fieldPrefix}_five`]: "5",
+        [`${fieldPrefix}_ten`]: "4",
+        [`${fieldPrefix}_twenty`]: "4",
+        [`${fieldPrefix}_fifty`]: "2",
     };
 
     for (const id in fieldValues) {
@@ -30,7 +32,7 @@ function fillRegisterCloseFields() {
             field.dispatchEvent(changeEvent);
         } else {
             console.warn(
-                `Zenstension: Field with ID '${id}' not found on register close page.`,
+                `Zenstension: Field with ID '${id}' not found on register ${registerMode} page.`,
             );
         }
     }
