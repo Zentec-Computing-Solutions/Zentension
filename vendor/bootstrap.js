@@ -1,7 +1,7 @@
 // Bootstrap for Zenstension copy + print features.
 // `copy_buttons.js` and `print_label_button.js` are injected before
-// this file (see manifest.json). They expose `addCopyButtons()` and
-// `initPrintLabel()` respectively.
+// this file (see manifest.json). They expose `addCopyButtons()`,
+// `addTicketNumberCopyButton()`, and `initPrintLabel()`.
 
 const currentPath = window.location.pathname;
 const ticketSpecificPageRegex = /^\/tickets\/\d+$/;
@@ -18,6 +18,14 @@ if (ticketSpecificPageRegex.test(currentPath)) {
         if (typeof addCopyButtons === "function") addCopyButtons(["customer"]);
     } catch (err) {
         console.warn("Zenstension: addCopyButtons error", err);
+    }
+
+    try {
+        if (typeof addTicketNumberCopyButton === "function") {
+            addTicketNumberCopyButton();
+        }
+    } catch (err) {
+        console.warn("Zenstension: addTicketNumberCopyButton error", err);
     }
 }
 

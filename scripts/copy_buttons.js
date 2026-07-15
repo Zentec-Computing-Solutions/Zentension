@@ -1,5 +1,56 @@
 // copy_buttons.js
-// Provides addCopyButtons(headerKeywords)
+// Provides addCopyButtons(headerKeywords) and addTicketNumberCopyButton()
+
+function ensureZenstensionCopyStyles() {
+    if (document.getElementById("zenstension-copy-styles")) return;
+
+    const style = document.createElement("style");
+    style.id = "zenstension-copy-styles";
+    style.textContent = `
+        .zenstension-copy-btn { margin-left: 8px; padding: 2px 6px; font-size: 12px; cursor: pointer; background: transparent; border: none; }
+        .zenstension-copy-btn:active { transform: translateY(1px); }
+        .zenstension-copy-icon { font-size: 12px; color: inherit; transition: color 150ms ease, transform 150ms ease, opacity 150ms ease; }
+        .zenstension-copy-checked { color: #28a745 !important; }
+        .zenstension-ticket-number-copy-btn { vertical-align: middle; }
+    `;
+    document.head.appendChild(style);
+}
+
+function writeZenstensionClipboardText(text) {
+    if (!text) return Promise.resolve();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+    }
+    return new Promise((resolve, reject) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+            const ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+            if (ok) resolve();
+            else reject(new Error("copy command failed"));
+        } catch (err) {
+            document.body.removeChild(ta);
+            reject(err);
+        }
+    });
+}
+
+function showZenstensionCopyFeedback(button) {
+    const icon = button.querySelector(".zenstension-copy-icon");
+    if (!icon) return;
+    const origClasses = icon.className;
+    icon.className =
+        "fas fa-check zenstension-copy-icon zenstension-copy-checked";
+    setTimeout(() => {
+        icon.className = origClasses;
+    }, 900);
+}
 
 function addCopyButtons(headerKeywords = ["customer"]) {
     // Helper to extract visible text from a cell, excluding our copy UI
@@ -14,54 +65,8 @@ function addCopyButtons(headerKeywords = ["customer"]) {
         return clone.innerText.replace(/\s+/g, " ").trim();
     }
 
-    function writeToClipboard(text) {
-        if (!text) return Promise.resolve();
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            return navigator.clipboard.writeText(text);
-        }
-        return new Promise((resolve, reject) => {
-            const ta = document.createElement("textarea");
-            ta.value = text;
-            ta.style.position = "fixed";
-            ta.style.left = "-9999px";
-            document.body.appendChild(ta);
-            ta.focus();
-            ta.select();
-            try {
-                const ok = document.execCommand("copy");
-                document.body.removeChild(ta);
-                if (ok) resolve();
-                else reject(new Error("copy command failed"));
-            } catch (err) {
-                document.body.removeChild(ta);
-                reject(err);
-            }
-        });
-    }
-
-    function showFeedback(button) {
-        const icon = button.querySelector(".zenstension-copy-icon");
-        if (!icon) return;
-        const origClasses = icon.className;
-        icon.className =
-            "fas fa-check zenstension-copy-icon zenstension-copy-checked";
-        setTimeout(() => {
-            icon.className = origClasses;
-        }, 900);
-    }
-
     // Add minimal styles for copy button (only once)
-    if (!document.getElementById("zenstension-copy-styles")) {
-        const style = document.createElement("style");
-        style.id = "zenstension-copy-styles";
-        style.textContent = `
-            .zenstension-copy-btn { margin-left: 8px; padding: 2px 6px; font-size: 12px; cursor: pointer; background: transparent; border: none; }
-            .zenstension-copy-btn:active { transform: translateY(1px); }
-            .zenstension-copy-icon { font-size: 12px; color: inherit; transition: color 150ms ease, transform 150ms ease, opacity 150ms ease; }
-            .zenstension-copy-checked { color: #28a745 !important; }
-        `;
-        document.head.appendChild(style);
-    }
+    ensureZenstensionCopyStyles();
 
     // include all tables so pages that use different table classes (e.g. `fit vtop`) are matched
     const tables = Array.from(document.querySelectorAll("table"));
@@ -99,9 +104,9 @@ function addCopyButtons(headerKeywords = ["customer"]) {
                     ev.preventDefault();
                     ev.stopPropagation();
                     const text = extractVisibleText(cell);
-                    writeToClipboard(text)
-                        .then(() => showFeedback(copyBtn))
-                        .catch(() => showFeedback(copyBtn));
+                    writeZenstensionClipboardText(text)
+                        .then(() => showZenstensionCopyFeedback(copyBtn))
+                        .catch(() => showZenstensionCopyFeedback(copyBtn));
                 });
 
                 cell.appendChild(copyBtn);
@@ -114,5 +119,53 @@ function addCopyButtons(headerKeywords = ["customer"]) {
         });
     });
 
+    return true;
+}
+
+function addTicketNumberCopyButton() {
+    const ticketMatch = window.location.pathname.match(/\/tickets\/(\d+)$/);
+    if (!ticketMatch) return false;
+
+    const headings = Array.from(document.querySelectorAll("h1"));
+    const ticketHeading =
+        headings.find((heading) =>
+            /#\d+/.test(heading.textContent || ""),
+        ) || headings[0];
+
+    if (!ticketHeading) return false;
+    if (ticketHeading.querySelector(".zenstension-ticket-number-copy-btn")) {
+        return true;
+    }
+
+    function getVisibleTicketNumber() {
+        const clone = ticketHeading.cloneNode(true);
+        clone
+            .querySelectorAll(".zenstension-ticket-number-copy-btn")
+            .forEach((node) => node.remove());
+
+        const visibleTicketMatch = (clone.textContent || "").match(/#\d+/);
+        return visibleTicketMatch ? visibleTicketMatch[0] : `#${ticketMatch[1]}`;
+    }
+
+    ensureZenstensionCopyStyles();
+
+    const copyBtn = document.createElement("button");
+    copyBtn.type = "button";
+    copyBtn.className =
+        "btn btn-default btn-xs zenstension-copy-btn zenstension-ticket-number-copy-btn";
+    copyBtn.innerHTML =
+        '<i class="fas fa-copy zenstension-copy-icon" aria-hidden="true"></i>';
+    copyBtn.setAttribute("aria-label", "Copy ticket number");
+    copyBtn.title = "Copy ticket number";
+
+    copyBtn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        writeZenstensionClipboardText(getVisibleTicketNumber())
+            .then(() => showZenstensionCopyFeedback(copyBtn))
+            .catch(() => showZenstensionCopyFeedback(copyBtn));
+    });
+
+    ticketHeading.appendChild(copyBtn);
     return true;
 }
